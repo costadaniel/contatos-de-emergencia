@@ -12,6 +12,7 @@ const ButtonContainer = styled.TouchableOpacity<StyledTypes>`
   justify-content: center;
   align-items: center;
   padding: 10px;
+  margin: 0px 0px 10px;
   border-radius: 5px;
   background-color: ${(props) => (props.bgColor ? props.color : "black")};
 `;
@@ -31,7 +32,6 @@ type Props = {
 };
 
 const Button = ({ iconName, size, text, color, bgColor, onPress }: Props) => {
-  console.log(color);
   return (
     <ButtonContainer bgColor={bgColor} onPress={onPress}>
       {iconName && <Feather name={iconName} size={size} color={color} />}
