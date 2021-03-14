@@ -1,28 +1,27 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import styled from "styled-components/native";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
 
-import { LoginScreenRouteProps, LoginScreenNavigationProps } from "routes";
+import { LoginScreenNavigationProps } from "routes";
+
+const Container = styled.View`
+  flex: 1;
+  align-items: stretch;
+  justify-content: center;
+  padding: 10px;
+`;
 
 type Props = {
-  routes: LoginScreenRouteProps;
   navigation: LoginScreenNavigationProps;
 };
 
-export default ({ navigation, routes }: Props) => {
+export default ({ navigation }: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "stretch",
-        justifyContent: "center",
-        padding: 10,
-      }}
-    >
+    <Container>
       <TextInput
         placeholder={"Usuário"}
         value={username}
@@ -39,6 +38,6 @@ export default ({ navigation, routes }: Props) => {
         text={"Criar Conta"}
         onPress={() => navigation.navigate("CreateAccount")}
       />
-    </View>
+    </Container>
   );
 };

@@ -11,15 +11,18 @@ import CreateAccountScreen from "./screens/CreateAccountScreen";
 import LoginScreen from "./screens/LoginScreen";
 
 type stackParamList = {
-  Login: { username: string } | undefined;
+  Login: undefined;
   CreateAccount: undefined;
 };
-
-export type LoginScreenRouteProps = RouteProp<stackParamList, "Login">;
 
 export type LoginScreenNavigationProps = StackNavigationProp<
   stackParamList,
   "Login"
+>;
+
+export type CreateAccountScreenNavigationProps = StackNavigationProp<
+  stackParamList,
+  "CreateAccount"
 >;
 
 const Stack = createStackNavigator<stackParamList>();
