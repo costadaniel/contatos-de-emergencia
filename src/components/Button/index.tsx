@@ -11,10 +11,10 @@ type StyledTypes = {
 const ButtonContainer = styled.TouchableOpacity<StyledTypes>`
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: ${({ theme }) => theme.metrics.padding}px;
   margin: 0px 0px 10px;
   border-radius: 5px;
-  background-color: ${(props) => (props.bgColor ? props.color : "black")};
+  background-color: ${(props) => (props.bgColor ? props.bgColor : "black")};
 `;
 
 const ButtonText = styled.Text<StyledTypes>`

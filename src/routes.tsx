@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -11,9 +11,11 @@ import CreateAccountScreen from "./screens/CreateAccountScreen";
 import LoginScreen from "./screens/LoginScreen";
 
 type stackParamList = {
-  Login: { userName: string } | undefined;
+  Login: { username: string } | undefined;
   CreateAccount: undefined;
 };
+
+export type LoginScreenRouteProps = RouteProp<stackParamList, "Login">;
 
 export type LoginScreenNavigationProps = StackNavigationProp<
   stackParamList,

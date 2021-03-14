@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
-import Button from "../../components/Button";
-import styled from "styled-components/native";
+import { View } from "react-native";
+import Button from "components/Button";
+import TextInput from "components/TextInput";
 
-import { LoginScreenNavigationProps } from "routes";
-
-const CreateAccountButton = styled(Button)`
-  background-color: red;
-`;
+import { LoginScreenRouteProps, LoginScreenNavigationProps } from "routes";
 
 type Props = {
+  routes: LoginScreenRouteProps;
   navigation: LoginScreenNavigationProps;
 };
 
-export default ({ navigation }: Props) => {
+export default ({ navigation, routes }: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,9 +23,19 @@ export default ({ navigation }: Props) => {
         padding: 10,
       }}
     >
-      <Text>Login screen</Text>
+      <TextInput
+        placeholder={"Usuário"}
+        value={username}
+        onChangeText={(text) => setUsername(text)}
+      />
+      <TextInput
+        placeholder={"Senha"}
+        value={password}
+        secureTextEntry={true}
+        onChangeText={(text) => setPassword(text)}
+      />
       <Button text={"Login"} onPress={() => {}} />
-      <CreateAccountButton
+      <Button
         text={"Criar Conta"}
         onPress={() => navigation.navigate("CreateAccount")}
       />

@@ -1,6 +1,13 @@
 import React from "react";
 import Routes from "routes";
 
+import theme from "styles";
+import { ThemeProvider } from "styled-components";
+
 export default function App() {
-  return <Routes />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Routes />
+    </ThemeProvider>
+  );
 }

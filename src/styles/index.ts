@@ -1,7 +1,4 @@
-import * as styledComponents from "styled-components/native";
-import { DefaultTheme } from "styled-components/native";
-
-const theme: DefaultTheme = {
+const theme = {
   metrics: {
     padding: 10,
     margin: 10,
