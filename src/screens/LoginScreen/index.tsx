@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
+import Button from "../../components/Button";
 
 import { LoginScreenNavigationProps } from "routes";
 
@@ -15,8 +16,8 @@ export default ({ navigation }: Props) => {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Login screen</Text>
       <Button
+        text={"Criar Conta"}
         onPress={() => navigation.navigate("CreateAccount")}
-        title="Create Account"
       />
     </View>
   );

@@ -26,8 +26,16 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateAccount"
+          component={CreateAccountScreen}
+          options={{ title: "Criar Usuário" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
