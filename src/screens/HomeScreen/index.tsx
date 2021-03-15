@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Text } from "react-native";
+import * as Contacts from "expo-contacts";
 import styled from "styled-components/native";
 import Button from "components/Button";
+import BottomScreenButton from "components/BottomScreenButton";
 import { useAuthProvider } from "contexts/AuthProvider";
 import { HomeScreenNavigationProps } from "routes";
 
@@ -22,6 +24,12 @@ type Props = {
 
 export default ({ navigation }: Props) => {
   const { authenticatedUser, updateAuthenticatedUser } = useAuthProvider();
+
+  const handleGoToContactsScreen = async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status !== "granted") return;
+    navigation.navigate("Settings");
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -45,6 +53,10 @@ export default ({ navigation }: Props) => {
   return (
     <Container>
       <Text>Home screen</Text>
+      <BottomScreenButton
+        onPress={handleGoToContactsScreen}
+        text="Adicionar Contatos"
+      />
     </Container>
   );
 };

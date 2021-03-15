@@ -80,7 +80,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      {authenticatedUser ? <AppNavigation /> : <AuthNavigation />}
+      {!authenticatedUser ? <AppNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );
 };
