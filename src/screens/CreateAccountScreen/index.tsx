@@ -22,8 +22,40 @@ export default ({ navigation }: Props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleCreateAccount = () => {
-    navigation.navigate("Login");
+  const handleCreateAccount = async () => {
+    try {
+      const accounts = await AsyncStorage.getItem(
+        "@contatos_de_emergencia/users"
+      );
+      if (accounts !== null) {
+        const users = JSON.parse(accounts);
+        const isUserExist = users.some((obj: any) => obj.username === username);
+
+        if (!isUserExist) {
+          const newUsers = [
+            ...users,
+            {
+              username,
+              password,
+              contacts: [],
+            },
+          ];
+          await AsyncStorage.setItem(
+            "@contatos_de_emergencia/users",
+            JSON.stringify(newUsers)
+          );
+          navigation.navigate("Login");
+        }
+      } else {
+        await AsyncStorage.setItem(
+          "@contatos_de_emergencia/users",
+          JSON.stringify([{ username, password, contacts: [] }])
+        );
+        navigation.navigate("Login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
