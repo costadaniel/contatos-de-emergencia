@@ -11,6 +11,7 @@ import HomeScreen from "screens/HomeScreen";
 import CreateAccountScreen from "screens/CreateAccountScreen";
 import LoginScreen from "screens/LoginScreen";
 import SettingsScreen from "screens/SettingsScreen";
+import ContactsScreen from "screens/ContactsScreen";
 
 type authStackParamList = {
   Login: undefined;
@@ -36,6 +37,11 @@ export type CreateAccountScreenNavigationProps = StackNavigationProp<
 export type HomeScreenNavigationProps = StackNavigationProp<
   appStackParamList,
   "Home"
+>;
+
+export type ContactsScreenNavigationProps = StackNavigationProp<
+  appStackParamList,
+  "Contacts"
 >;
 
 const AuthStack = createStackNavigator<authStackParamList>();
@@ -70,6 +76,11 @@ const AppNavigation = () => {
         name="Settings"
         component={SettingsScreen}
         options={{ title: "Configurações" }}
+      />
+      <AppStack.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{ title: "Contatos" }}
       />
     </AppStack.Navigator>
   );

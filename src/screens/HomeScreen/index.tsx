@@ -28,7 +28,7 @@ export default ({ navigation }: Props) => {
   const handleGoToContactsScreen = async () => {
     const { status } = await Contacts.requestPermissionsAsync();
     if (status !== "granted") return;
-    navigation.navigate("Settings");
+    navigation.navigate("Contacts");
   };
 
   useEffect(() => {
