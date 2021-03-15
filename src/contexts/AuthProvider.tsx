@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 const AuthContext = React.createContext({});
 
-export const useAuth = () => {
+export const useAuthProvider = () => {
   return useContext(AuthContext) as AuthContextTypes;
 };
 

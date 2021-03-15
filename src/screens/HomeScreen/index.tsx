@@ -1,18 +1,50 @@
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
+import styled from "styled-components/native";
 import Button from "components/Button";
-import { useAuth } from "contexts/AuthProvider";
+import { useAuthProvider } from "contexts/AuthProvider";
+import { HomeScreenNavigationProps } from "routes";
 
-export default () => {
-  const { authenticatedUser, updateAuthenticatedUser } = useAuth();
+const HeaderButtonContainer = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+`;
+
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+type Props = {
+  navigation: HomeScreenNavigationProps;
+};
+
+export default ({ navigation }: Props) => {
+  const { authenticatedUser, updateAuthenticatedUser } = useAuthProvider();
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtonContainer>
+          <Button
+            iconName="settings"
+            bgColor="transparent"
+            size={20}
+            onPress={() => {
+              navigation.navigate("Settings");
+            }}
+          />
+        </HeaderButtonContainer>
+      ),
+    });
+
     return () => updateAuthenticatedUser(null);
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <Container>
       <Text>Home screen</Text>
-    </View>
+    </Container>
   );
 };

@@ -5,11 +5,12 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import { useAuth } from "contexts/AuthProvider";
+import { useAuthProvider } from "contexts/AuthProvider";
 
-import HomeScreen from "./screens/HomeScreen";
-import CreateAccountScreen from "./screens/CreateAccountScreen";
-import LoginScreen from "./screens/LoginScreen";
+import HomeScreen from "screens/HomeScreen";
+import CreateAccountScreen from "screens/CreateAccountScreen";
+import LoginScreen from "screens/LoginScreen";
+import SettingsScreen from "screens/SettingsScreen";
 
 type authStackParamList = {
   Login: undefined;
@@ -30,6 +31,11 @@ export type LoginScreenNavigationProps = StackNavigationProp<
 export type CreateAccountScreenNavigationProps = StackNavigationProp<
   authStackParamList,
   "CreateAccount"
+>;
+
+export type HomeScreenNavigationProps = StackNavigationProp<
+  appStackParamList,
+  "Home"
 >;
 
 const AuthStack = createStackNavigator<authStackParamList>();
@@ -60,14 +66,17 @@ const AppNavigation = () => {
         component={HomeScreen}
         options={{ title: "Contatos de Emergência" }}
       />
+      <AppStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: "Configurações" }}
+      />
     </AppStack.Navigator>
   );
 };
 
 const Routes = () => {
-  const { authenticatedUser, updateAuthenticatedUser } = useAuth();
-
-  console.log(authenticatedUser);
+  const { authenticatedUser, updateAuthenticatedUser } = useAuthProvider();
 
   return (
     <NavigationContainer>
