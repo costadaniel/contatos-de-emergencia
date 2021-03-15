@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "contexts/AuthProvider";
 
 import { LoginScreenNavigationProps } from "routes";
 
@@ -20,6 +21,7 @@ type Props = {
 export default ({ navigation }: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { updateAuthenticatedUser } = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -33,7 +35,9 @@ export default ({ navigation }: Props) => {
         (obj: any) => obj.username === username && obj.password === password
       );
 
-      console.log(user);
+      if (user) {
+        updateAuthenticatedUser(user);
+      }
     } catch (error) {
       console.log(error);
     }
