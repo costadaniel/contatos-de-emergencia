@@ -2,18 +2,36 @@ import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
 import * as Contacts from "expo-contacts";
 import styled from "styled-components/native";
+import { Feather } from "@expo/vector-icons";
 import BottomScreenButton from "components/BottomScreenButton";
 import { ContactsScreenNavigationProps } from "routes";
+import { useAuthProvider } from "contexts/AuthProvider";
 
 const Container = styled.View`
   flex: 1;
 `;
 
-const ContactContainer = styled.View`
+const ContactContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
   background-color: white;
   padding: 10px;
   margin: 0px 10px 10px;
+  border-radius: 5px;
 `;
+
+const CheckedContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border-radius: 30px;
+  border-width: 2px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+`;
+
+const ContactInfoContainer = styled.View``;
 
 const ContactName = styled.Text`
   font-size: 18px;
@@ -29,17 +47,28 @@ type Props = {
   navigation: ContactsScreenNavigationProps;
 };
 
-export default ({ navigation }: Props) => {
-  const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
+type ItemProps = {
+  item: {
+    id: string;
+    name: string;
+    phone: string;
+  };
+};
 
-  const _renderContact = ({ item }: { item: Contacts.Contact }) => {
-    console.log(item);
+export default ({ navigation }: Props) => {
+  const [contacts, setContacts] = useState<any>([]);
+  const { authenticatedUser, updateAuthenticatedUser } = useAuthProvider();
+
+  const _renderContact = ({ item }: ItemProps) => {
     return (
       <ContactContainer>
-        <ContactName>{item.firstName}</ContactName>
-        {item?.phoneNumbers && (
-          <ContactNumber>{item?.phoneNumbers[0].number}</ContactNumber>
-        )}
+        <CheckedContainer>
+          {<Feather name="check" color="black" size={20} />}
+        </CheckedContainer>
+        <ContactInfoContainer>
+          <ContactName>{item.name}</ContactName>
+          <ContactNumber>{item.phone}</ContactNumber>
+        </ContactInfoContainer>
       </ContactContainer>
     );
   };
@@ -51,8 +80,19 @@ export default ({ navigation }: Props) => {
         const { data } = await Contacts.getContactsAsync({
           fields: [Contacts.Fields.PhoneNumbers],
         });
+        const accounts = data
+          .map((item) =>
+            item.phoneNumbers
+              ? {
+                  id: item.id,
+                  name: item.firstName,
+                  phone: item?.phoneNumbers[0].number,
+                }
+              : null
+          )
+          .filter((item) => item !== null);
 
-        setContacts(data);
+        setContacts(accounts);
       }
     })();
   }, []);
@@ -64,7 +104,6 @@ export default ({ navigation }: Props) => {
         renderItem={_renderContact}
         keyExtractor={(item) => item.id}
       />
-
       <BottomScreenButton
         onPress={() => {
           console.log(contacts[0]);

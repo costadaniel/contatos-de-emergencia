@@ -5,6 +5,7 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthProvider } from "contexts/AuthProvider";
 
 import HomeScreen from "screens/HomeScreen";
@@ -89,9 +90,25 @@ const AppNavigation = () => {
 const Routes = () => {
   const { authenticatedUser, updateAuthenticatedUser } = useAuthProvider();
 
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const data = await AsyncStorage.getItem(
+          "@contatos_de_emergencia/logged"
+        );
+        const loggedAccount = data ? JSON.parse(data) : null;
+
+        if (loggedAccount === null) return;
+        updateAuthenticatedUser(loggedAccount);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <NavigationContainer>
-      {!authenticatedUser ? <AppNavigation /> : <AuthNavigation />}
+      {authenticatedUser ? <AppNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );
 };
